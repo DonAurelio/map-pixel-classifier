@@ -11,6 +11,7 @@ from django.views.generic.base import TemplateView
 
 from image.tasks import start_image_processing
 
+import os
 
 class IndexView(TemplateView):
 
@@ -32,16 +33,21 @@ class UploadImage(CreateView):
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
-        model_data = {
+        
+        image_data = {
         	'id': self.object.id,
-        	'file_url': self.object.upload.name,
-        	'model': self.object.model
+        	'file_url': os.path.join(settings.MEDIA_ROOT,self.object.upload.name),
+        	'classified_path': os.path.join(settings.MEDIA_ROOT,self.object.processed_path()) 
+        }
+
+        model_data = {
+        	'path': os.path.join(settings.MEDIA_ROOT,'model_nn_1.h5')
         }
 
         db_data = {
         	'database_name': settings.DATABASES['default']['NAME']
         }
-        start_image_processing.delay(model_data,db_data)
+        start_image_processing.delay(image_data,model_data,db_data)
 
         return reverse('image:index')
 

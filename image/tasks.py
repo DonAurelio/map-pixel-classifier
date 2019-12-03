@@ -2,20 +2,61 @@ from celery.decorators import task
 from celery.utils.log import get_task_logger
 
 import sqlite3
+import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
+
+from keras.models import load_model
+
+
 
 logger = get_task_logger(__name__)
 
 
 @task(name="start_image_processing")
-def start_image_processing(model_data,db_data):
+def start_image_processing(image_data,model_data,db_data):
     """sends an email when feedback form is filled successfully"""
 
     logger.info("Start Image Processing")
     
-    model_id = model_data['id']
-    model_file_url = model_data['file_url']
-    model_name = model_data['id']
+    # Loading image data
+    image_id = image_data['id']
+    image_file_path = image_data['file_url']
+    image_classified_path = image_data['classified_path']
 
+    data = xr.open_rasterio(image_file_path)
+    inv = np.transpose(data.values)
+
+    # loading model data
+    model_path = model_data['path']
+    model = load_model(model_path)
+
+    # Perform predictions
+    probabilities = []
+    for i in range(0,inv.shape[0]):
+        probabilities.append(model.predict(inv[i]))
+    
+    result = np.array(probabilities)
+    # Axis = 2 es la dimesnion que contiene las probabilidad des 
+    # de las predicciones realizadas sobre las bandas espectrales
+    result = np.argmax(result,axis=2)
+    result = np.transpose(result)
+
+    # Define las coordenadas de los puntos
+    coords = {'x':data.x.values,'y':data.y.values}
+
+    # Define el orden de las dimensiones
+    dims = ('y','x')
+
+    # Define los metadatos o atributos
+    attrs = {
+        'crs': data.crs,
+        'transform': data.transform
+    }
+
+    data_array = xr.DataArray(data=result,coords=coords,dims=dims)
+
+    plt.imsave(image_classified_path, data_array)
 
     query_format = (
         'UPDATE image_simage SET '
@@ -29,8 +70,8 @@ def start_image_processing(model_data,db_data):
     ERROR = '3'
 
     fields = {
-    	'status': PROCESSED,
-    	'id': model_id
+        'status': PROCESSED,
+        'id': image_id
 
     }
 

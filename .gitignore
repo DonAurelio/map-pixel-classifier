@@ -1,0 +1,7 @@
+media/uploads/*.png
+media/uploads/*.tif
+media/model_nn_1.h5
+
+__pychace__/
+
+dump.rdb

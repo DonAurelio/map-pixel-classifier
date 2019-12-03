@@ -74,14 +74,14 @@ body {
   <a href="{% url 'image:list' %}">Images</a>
 </div>
 
-<div class="main">
-  <section class="main-container">
+<!-- <div class="main"> -->
+  <!-- <section class="main-container"> -->
   <div class="container">
-      <div class="row">
+      <!-- <div class="row"> -->
 
         <!-- main start -->
         <!-- ================ -->
-        <div class="main col-md-8">
+        <div class="main col-md-10">
         <br><br>
         <div class="table-responsive">
           <table class="table">
@@ -89,6 +89,7 @@ body {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
+                <th scope="col">Processed</th>
                 <th scope="col">Model</th>
                 <th scope="col">Status</th>
               </tr>
@@ -98,6 +99,7 @@ body {
               <tr>
                 <th scope="row">{{ object.id }}</th>
                 <td>{{ object.upload.name }}</td>
+                <td>{{ object.processed_path }}</td>
                 <td>{{ object.get_model_display }}</td>
                 <td>{{ object.get_status_display }}</td>
               </tr>
@@ -107,9 +109,9 @@ body {
           </div>
         </div>
         <!-- main end -->
-      </div>
+      <!-- </div> -->
     </div>
-  </section>
+  <!-- </section> -->
   <!-- main-container end -->   
 </body>
 </html> 

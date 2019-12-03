@@ -47,3 +47,6 @@ class SImage(models.Model):
     south = models.CharField(max_length=200)
     east = models.CharField(max_length=200)
     west = models.CharField(max_length=200)
+
+    def processed_path(self):
+        return self.upload.name[:-4] + '_processed.tif'
