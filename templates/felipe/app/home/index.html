@@ -1,0 +1,97 @@
+<html>
+
+<head>
+  <script src="./index.js"></script>
+  <link rel="icon" href="/index.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="robots" content="index, nofollow">
+  <meta name="revisit-after" content="30 days">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <title>Map-Pixel-Classifier</title>
+</head>
+
+<body>
+  <link rel="stylesheet" type="text/css" href="./home_files/home.css">
+  <div class="Home">
+    <h1 style="text-align:center">Map-Pixel-Classifier</h1>
+    <div class="container">
+      <div>
+        <div>
+          Las scenas Landsat 8 OLI LASRC tomadas en este trabajo, son imágenes pertenecientes a la Colección 1 - Nivel 2 (On demand) del catálogo de imagenes USGS Earth Explorer. Las imagenes del Nivel 2 presentan correcciones atmosfericas de reflectancia de superficie (Surface Reflectance SR). Estas correcciones mitigan el efecto de los gases o aerosoles que se encuentran en la atmosfera y pueden afectar la reflectancia de la tierra sensada por el satelite (sensor). Las correcciones atmosféricas son llevadas a cabo por el algoritmo LASRC (Landsat Surface Reflectance Code)
+          <br/>
+          Durante la generación de las scenas corregidas en superficie de reflectancia, el algoritmo LASRC evalua la calidad de cada pixel y esta información la información de esta evaluación la registra en 3 bandas (sr_aeroso, pixel_qa, radsat_qa) que se generan de forma adicional al finalizar la corección de reflectancia.
+          <br/>
+          El rango de valores que se pueden encontrar para cada pixel en las respectivas bandas son:
+          <br/>
+          <ul>
+              <li>band_1 (coastal_aerosol): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_2 (blue): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_3 (green): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_4 (red): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_5 (nir): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_6 (swir1): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>band_7 (swir2): unidad=reflectancia; rango=-2000,16000; rango_valido=0,10000
+              </li>
+              <li>pixel_qa (pixel_qa): rango=0,32768 rango_valido=0,32768
+              </li>
+              <li>sr_aerosol (sr_aerosol_qa, aerosol_qa, aerosol): rango=0,255; rango_valido=0,255
+              </li>
+              <li>radsat_qa (radsat_qa): rango=0,32768 rango_valido=0,32768
+          </ul>
+        </div>
+        <div>
+          <h3>Jupyters</h3>
+          <br/>
+          <a href="./home_files/1. Classification Algorthms (Datacube).html">1. Classification Algorthms (Datacube).html</a>
+          <br/>
+          <a href="./home_files/2. Create Landsat Pandas Dataset (Rasterio).html">2. Create Landsat Pandas Dataset (Rasterio).html</a>
+          <br/>
+          <a href="./home_files/3. Redes Neuronales (Modelo).html">3. Redes Neuronales (Modelo).html</a>
+          <br/>
+          <a href="./home_files/4. Satellite Image Classification.html">4. Satellite Image Classification.html</a>
+        </div>
+        <div>
+          <img style="left:25%;width:50%;text-align:center;;" src="./home_files/main/colombia_scenes.png" alt="Image of Login digital 57">
+        </div>
+        <div>
+          <div>
+            <div class="gallery">
+              <a href="./home_files/main/example.jpeg">
+                <img src="./home_files/main/example.jpeg" alt="Guajira" width="300" height="200">
+              </a>
+            </div>
+            <div class="gallery">
+              <a href="./home_files/main/example.PNG">
+                <img src="./home_files/main/example.PNG" alt="Guajira" width="300" height="200">
+              </a>
+            </div>
+            <div class="gallery">
+              <a href="./home_files/main/example1.PNG">
+                <img src="./home_files/main/example1.PNG" alt="Choco" width="300" height="200">
+              </a>
+            </div>
+            <div class="gallery">
+              <a href="./home_files/main/example2.PNG">
+                <img src="./home_files/main/example2.PNG" alt="Choco2" width="300" height="200">
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    </div>
+  </div>
+</body>
+
+</html>
