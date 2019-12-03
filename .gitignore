@@ -2,6 +2,10 @@ media/uploads/*.png
 media/uploads/*.tif
 media/model_nn_1.h5
 
+# Python
 __pychace__/
 
+# celery
 dump.rdb
+celerybeat-schedule.db 
+celerybeat.pid

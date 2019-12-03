@@ -49,4 +49,4 @@ class SImage(models.Model):
     west = models.CharField(max_length=200)
 
     def processed_path(self):
-        return self.upload.name[:-4] + '_processed.tif'
+        return self.upload.name[:-4] + '_processed.png'
