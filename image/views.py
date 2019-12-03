@@ -1,5 +1,7 @@
 from django.shortcuts import render, reverse
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
+
 from image.models import SImage
 
 
@@ -16,8 +18,13 @@ class IndexView(TemplateView):
 class UploadImage(CreateView):
     # Use simage_form.html as template implicity
     model = SImage
-    fields = ['upload']
+    fields = ['upload','model']
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
         return reverse('image:index')
+
+
+class ListImages(ListView):
+	# Use simage_list.html as template implicity
+    model = SImage
