@@ -13,10 +13,10 @@ class SImage(models.Model):
     NB_2 = '4'
 
     MODEL_SELECT = (
-        (NN_1, "Red Neuronal 1"),
-        (NN_2, "Red Neuronal 2"),
-        (NB_1, "Naive Bayes 1"),
-        (NB_2, "Naive Bayes 2")
+        (NN_1, "Red Neuronal (Sin nubes)"),
+        # (NN_2, "Red Neuronal 2"),
+        (NB_1, "Naive Bayes (Multinomial)"),
+        # (NB_2, "Naive Bayes 2")
     )
 
     WAITING = '0'

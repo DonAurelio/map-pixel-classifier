@@ -1,6 +1,6 @@
 media/uploads/*.png
 media/uploads/*.tif
-media/model_nn_1.h5
+
 
 # Python
 */__pychace__/*
