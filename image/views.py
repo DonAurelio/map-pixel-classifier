@@ -9,6 +9,9 @@ from image.models import SImage
 
 from django.views.generic.base import TemplateView
 
+from image.tasks import start_image_processing
+
+
 class IndexView(TemplateView):
 
     def get(self,request,*args,**kwargs):
@@ -29,8 +32,8 @@ class UploadImage(CreateView):
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
+        start_image_processing.delay(self.object)
         return reverse('image:index')
-
 
 class ListImages(ListView):
 	# Use simage_list.html as template implicity
