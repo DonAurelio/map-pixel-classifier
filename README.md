@@ -47,6 +47,10 @@ One more términal to run the django development server
 python3 manage.py runserver
 ```
 
+## Contributors
+
+* Aurelio Vivas, Arnold Lara, Felipe Cueto Daniel Martines
+
 ## References 
 
 1. [Asynchronous Tasks With Django and Celery](https://realpython.com/asynchronous-tasks-with-django-and-celery/)
