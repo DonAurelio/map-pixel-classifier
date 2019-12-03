@@ -92,6 +92,7 @@ body {
                 <th scope="col">Processed</th>
                 <th scope="col">Model</th>
                 <th scope="col">Status</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
@@ -102,6 +103,11 @@ body {
                 <td>{{ object.processed_path }}</td>
                 <td>{{ object.get_model_display }}</td>
                 <td>{{ object.get_status_display }}</td>
+                <td>
+                  {% if object.get_status_display in "Processed" %}
+                  <a class="btn btn-primary" href="{% url 'image:detail' object.pk %}" role="button"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
             </tbody>

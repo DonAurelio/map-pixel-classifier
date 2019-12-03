@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+import os 
+
 # Create your models here.
 
 class SImage(models.Model):
@@ -50,3 +52,6 @@ class SImage(models.Model):
 
     def processed_path(self):
         return self.upload.name[:-4] + '_processed.png'
+
+    def processed_url(self):
+        return os.path.join(settings.MEDIA_URL,self.processed_path())

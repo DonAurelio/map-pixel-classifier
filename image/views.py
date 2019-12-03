@@ -1,6 +1,7 @@
 from django.shortcuts import render, reverse
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from image.models import SImage
 from django.conf import settings
@@ -35,22 +36,27 @@ class UploadImage(CreateView):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
         
         image_data = {
-        	'id': self.object.id,
-        	'file_url': os.path.join(settings.MEDIA_ROOT,self.object.upload.name),
-        	'classified_path': os.path.join(settings.MEDIA_ROOT,self.object.processed_path()) 
+            'id': self.object.id,
+            'file_url': os.path.join(settings.MEDIA_ROOT,self.object.upload.name),
+            'classified_path': os.path.join(settings.MEDIA_ROOT,self.object.processed_path()) 
         }
 
         model_data = {
-        	'path': os.path.join(settings.MEDIA_ROOT,'model_nn_1.h5')
+            'path': os.path.join(settings.MEDIA_ROOT,'model_nn_1.h5')
         }
 
         db_data = {
-        	'database_name': settings.DATABASES['default']['NAME']
+            'database_name': settings.DATABASES['default']['NAME']
         }
         start_image_processing.delay(image_data,model_data,db_data)
 
         return reverse('image:list')
 
 class ListImages(ListView):
-	# Use simage_list.html as template implicity
+    # Use simage_list.html as template implicity
+    model = SImage
+
+
+class DetailImage(DetailView):
+    # Use simage_detail.html as template implicity
     model = SImage
