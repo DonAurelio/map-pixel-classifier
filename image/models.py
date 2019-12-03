@@ -17,18 +17,32 @@ class SImage(models.Model):
         (NB_2, "Naive Bayes 2")
     )
 
+    WAITING = '0'
     PROCESSING = '1'
     PROCESSED =  '2'
+    ERROR = '3'
 
     PROCESSING_STATUS = (
+        (WAITING,'Waiting'),
         (PROCESSING,'Processing'),
-        (PROCESSED,'Processed')
+        (PROCESSED,'Processed'),
+        (ERROR,'Error')
     )
+
+    IDEAM = '0'
+    USGS = '1'
+
+    SOURCE = (
+        (IDEAM,'Colombia Geoscience Datacube IDEAM'),
+        (USGS,'United States Geological Survey USGS')
+    )
+
 
     # file will be saved to MEDIA_ROOT/uploads/2015/01/30
     upload = models.FileField(upload_to='uploads/')
-    model = models.CharField(max_length=2,choices=MODEL_SELECT)
-    status = models.CharField(max_length=2,choices=PROCESSING_STATUS)
+    model = models.CharField(max_length=2,choices=MODEL_SELECT,default=WAITING)
+    source = models.CharField(max_length=2,choices=MODEL_SELECT,default=WAITING)
+    status = models.CharField(max_length=2,choices=SOURCE)
     north = models.CharField(max_length=200)
     south = models.CharField(max_length=200)
     east = models.CharField(max_length=200)
