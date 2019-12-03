@@ -49,7 +49,7 @@ class UploadImage(CreateView):
         }
         start_image_processing.delay(image_data,model_data,db_data)
 
-        return reverse('image:index')
+        return reverse('image:list')
 
 class ListImages(ListView):
 	# Use simage_list.html as template implicity

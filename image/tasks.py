@@ -56,11 +56,20 @@ def start_image_processing(image_data,model_data,db_data):
 
     data_array = xr.DataArray(data=result,coords=coords,dims=dims)
 
+    west = str(min(data_array.x.values))
+    east = str(max(data_array.x.values))
+    south = str(min(data_array.y.values)) 
+    north = str(max(data_array.y.values))
+
     plt.imsave(image_classified_path, data_array)
 
     query_format = (
         'UPDATE image_simage SET '
-        'status=\'%(status)s\' '
+        'status=\'%(status)s\', '
+        'west=\'%(west)s\', '
+        'east=\'%(east)s\', '
+        'south=\'%(south)s\', '
+        'north=\'%(north)s\' '
         'WHERE id=\'%(id)s\';'
     )
 
@@ -70,9 +79,12 @@ def start_image_processing(image_data,model_data,db_data):
     ERROR = '3'
 
     fields = {
+        'west': west,
+        'east': east,
+        'south': south,
+        'north': north,
         'status': PROCESSED,
         'id': image_id
-
     }
 
     query_str = query_format % fields
