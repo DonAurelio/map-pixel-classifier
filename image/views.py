@@ -12,7 +12,14 @@ from django.views.generic.base import TemplateView
 class IndexView(TemplateView):
 
     def get(self,request,*args,**kwargs):
-        template_name = 'index.html'
+        template_name = 'image/index.html'
+        return render(request,template_name)
+
+
+class MapView(TemplateView):
+
+    def get(self,request,*args,**kwargs):
+        template_name = 'image/map.html'
         return render(request,template_name)
 
 class UploadImage(CreateView):
