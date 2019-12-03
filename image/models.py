@@ -16,7 +16,7 @@ class SImage(models.Model):
         (NN_1, "Red Neuronal (Sin nubes)"),
         # (NN_2, "Red Neuronal 2"),
         (NB_1, "Naive Bayes (Multinomial)"),
-        # (NB_2, "Naive Bayes 2")
+        (NB_2, "Naive Bayes (Gausiano)")
     )
 
     WAITING = '0'

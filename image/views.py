@@ -12,6 +12,7 @@ from django.views.generic.base import TemplateView
 
 from image.tasks import start_image_processing_nn_1
 from image.tasks import start_image_processing_nb_1
+from image.tasks import start_image_processing_nb_2
 
 import os
 
@@ -48,9 +49,14 @@ class UploadImage(CreateView):
 
         if self.object.model == SImage.NB_1:
             model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'model_nb_multi_1.joblib')
+                'path': os.path.join(settings.MEDIA_ROOT,'model_nb_multi_nubes_1.joblib')
             }
             start_image_processing_nb_1.delay(image_data,model_data,db_data)
+        elif self.object.model == SImage.NB_2:
+            model_data = {
+                'path': os.path.join(settings.MEDIA_ROOT,'model_nb_gausiano_nubes_2.joblib')
+            }
+            start_image_processing_nb_2.delay(image_data,model_data,db_data)
         else:
             model_data = {
                 'path': os.path.join(settings.MEDIA_ROOT,'model_nn_1.h5')
