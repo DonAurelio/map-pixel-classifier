@@ -49,7 +49,7 @@ python3 manage.py runserver
 
 ## Contributors
 
-* Aurelio Vivas, Arnold Lara, Felipe Cueto Daniel Martines
+* Aurelio Vivas, Arnold Lara, Felipe Cueto, Daniel Martines
 
 ## References 
 
