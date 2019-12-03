@@ -3,7 +3,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from image.models import SImage
-
+from django.conf import settings
 
 # Create your views here.
 
@@ -32,7 +32,17 @@ class UploadImage(CreateView):
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
-        start_image_processing.delay(self.object)
+        model_data = {
+        	'id': self.object.id,
+        	'file_url': self.object.upload.name,
+        	'model': self.object.model
+        }
+
+        db_data = {
+        	'database_name': settings.DATABASES['default']['NAME']
+        }
+        start_image_processing.delay(model_data,db_data)
+
         return reverse('image:index')
 
 class ListImages(ListView):

@@ -40,9 +40,9 @@ class SImage(models.Model):
 
     # file will be saved to MEDIA_ROOT/uploads/2015/01/30
     upload = models.FileField(upload_to='uploads/')
-    model = models.CharField(max_length=2,choices=MODEL_SELECT,default=WAITING)
-    source = models.CharField(max_length=2,choices=MODEL_SELECT,default=WAITING)
-    status = models.CharField(max_length=2,choices=SOURCE)
+    model = models.CharField(max_length=2,choices=MODEL_SELECT,default=NN_1)
+    source = models.CharField(max_length=2,choices=SOURCE,default=USGS)
+    status = models.CharField(max_length=2,choices=PROCESSING_STATUS,default=WAITING)
     north = models.CharField(max_length=200)
     south = models.CharField(max_length=200)
     east = models.CharField(max_length=200)
