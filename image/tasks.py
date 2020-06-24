@@ -6,7 +6,7 @@ import numpy as np
 import xarray as xr
 import matplotlib.pyplot as plt
 
-from keras.models import load_model
+# from keras.models import load_model
 
 import joblib
 
@@ -30,7 +30,8 @@ def start_image_processing_nn_1(image_data,model_data,db_data):
 
     # loading model data
     model_path = model_data['path']
-    model = load_model(model_path)
+    # model = load_model(model_path)
+    model = None
 
     # Perform predictions
     probabilities = []
