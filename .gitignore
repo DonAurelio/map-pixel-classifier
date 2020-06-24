@@ -3,7 +3,7 @@ media/uploads/*.tif
 
 
 # Python
-*/__pychace__/*
+*/__pycache__/*
 
 # celery
 dump.rdb

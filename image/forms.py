@@ -7,4 +7,4 @@ from image.models import SImage
 class ArticleForm(ModelForm):
     class Meta:
         model = SImage
-        fields = ['upload']
+        exclude = ['status']

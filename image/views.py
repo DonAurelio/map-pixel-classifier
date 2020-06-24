@@ -32,7 +32,11 @@ class MapView(TemplateView):
 class UploadImage(CreateView):
     # Use simage_form.html as template implicity
     model = SImage
-    fields = ['upload','model']
+    fields = [
+        'model','product','platform',
+        'lat_min', 'lat_max','lon_min',
+        'lon_max','date_min','date_max'
+    ]
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})

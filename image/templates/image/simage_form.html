@@ -46,6 +46,10 @@ body {
   padding: 0px 10px;
 }
 
+.help-block {
+  font-size: 12;
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -70,7 +74,7 @@ body {
 <div class="sidenav">
   <a href="{% url 'image:index' %}">Home</a>
   <a href="{% url 'image:map' %}">Map</a>
-  <a href="{% url 'image:upload' %}">Upload</a>
+  <a href="{% url 'image:upload' %}">Classify</a>
   <a href="{% url 'image:list' %}">Images</a>
 </div>
 
@@ -86,12 +90,13 @@ body {
         <div class="separator-2"></div>
           <div class="section light-gray-bg">
             <div class="container">
-              <form role="form" class="form-horizontal col-md-5 col-md-offset-1" method="POST" enctype="multipart/form-data">
+              <!-- <form role="form" class="form-horizontal col-md-5 col-md-offset-1" method="POST" enctype="multipart/form-data"> -->
+              <form role="form" class="form-horizontal col-md-10" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% bootstrap_form form error_types="all" %}
+                {% bootstrap_form form layout='horizontal' error_types="all" %}
                 {% buttons %}
                 <!-- <div class="text-center"> -->
-                  <button type="submit" class="btn btn-default">
+                  <button type="submit" class="btn btn-default col-md-offset-11">
                      Enviar
                   </button>
                 <!-- </div> -->

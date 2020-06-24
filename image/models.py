@@ -7,16 +7,14 @@ import os
 
 class SImage(models.Model):
 
+    NN_0 = '0'
     NN_1 = '1'
-    NN_2 = '2'
-    NB_1 = '3'
-    NB_2 = '4'
+    NB_2 = '2'
+    NB_3 = '3'
 
     MODEL_SELECT = (
-        (NN_1, "Red Neuronal (Sin nubes)"),
-        # (NN_2, "Red Neuronal 2"),
-        (NB_1, "Naive Bayes (Multinomial)"),
-        (NB_2, "Naive Bayes (Gausiano)")
+        (NN_0, "Neural Networks"),
+        (NN_1, "Support Vector Machine"),
     )
 
     WAITING = '0'
@@ -35,23 +33,55 @@ class SImage(models.Model):
     USGS = '1'
 
     SOURCE = (
-        (IDEAM,'Colombia Geoscience Datacube IDEAM'),
+        (IDEAM,'Geoscience Datacube'),
         (USGS,'United States Geological Survey USGS')
     )
 
+    LS8_OLI_LARSRC = '0'
 
-    # file will be saved to MEDIA_ROOT/uploads/2015/01/30
-    upload = models.FileField(upload_to='uploads/')
+    PRODUCT = (
+        (LS8_OLI_LARSRC,'LS8_OLI_LARSRC'),
+    )
+
+    LANDSAT_8 = '0'
+
+    PLATFORM = (
+        (LANDSAT_8,'LANDSAT_8'),
+    )
+
     model = models.CharField(max_length=2,choices=MODEL_SELECT,default=NN_1)
-    source = models.CharField(max_length=2,choices=SOURCE,default=USGS)
     status = models.CharField(max_length=2,choices=PROCESSING_STATUS,default=WAITING)
-    north = models.CharField(max_length=200)
-    south = models.CharField(max_length=200)
-    east = models.CharField(max_length=200)
-    west = models.CharField(max_length=200)
+
+    product = models.CharField(max_length=2,choices=PRODUCT,default=LS8_OLI_LARSRC)
+    platform = models.CharField(max_length=2,choices=PLATFORM,default=LANDSAT_8)
+
+    lat_min = models.CharField(
+        'Latitude Min',
+        help_text='Valid values 5.276905999999999 - 3.0384721000000003. Example: 3.6667',
+        max_length=200
+    )
+    lat_max = models.CharField(
+        'Latitude Max',
+        help_text='Valid values 5.276905999999999 - 3.0384721000000003. Example: 3.9084',
+        max_length=200
+    )
+    lon_min = models.CharField(
+        'Longitude Min',
+        help_text='Valid values -75.80698879999998,-74.491394. Example: -75.0216',
+        max_length=200
+    )
+    lon_max = models.CharField(
+        'Longitude Max',
+        help_text='Valid values -75.80698879999998,-74.491394. Example: -74.8039',
+        max_length=200)
+
+    date_min = models.DateField('Date Min',help_text='Date format AAAA-MM-DD. Example: 2015-01-01')
+    date_max = models.DateField('Date Max',help_text='Date format AAAA-MM-DD. Example: 2016-01-01')
 
     def processed_path(self):
-        return self.upload.name[:-4] + '_processed.png'
+        # return self.upload.name[:-4] + '_processed.png'
+        return None
 
     def processed_url(self):
-        return os.path.join(settings.MEDIA_URL,self.processed_path())
+        # return os.path.join(settings.MEDIA_URL,self.processed_path())
+        return None
