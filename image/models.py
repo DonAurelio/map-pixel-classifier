@@ -7,14 +7,12 @@ import os
 
 class SImage(models.Model):
 
-    NN_0 = '0'
-    NN_1 = '1'
-    NB_2 = '2'
-    NB_3 = '3'
+    Model_0 = '0'
+    Model_1 = '1'
 
     MODEL_SELECT = (
-        (NN_0, "Neural Networks"),
-        (NN_1, "Support Vector Machine"),
+        (Model_0, "Neural Networks"),
+        (Model_1, "Random Forest"),
     )
 
     WAITING = '0'
@@ -49,7 +47,7 @@ class SImage(models.Model):
         (LANDSAT_8,'LANDSAT_8'),
     )
 
-    model = models.CharField(max_length=2,choices=MODEL_SELECT,default=NN_1)
+    model = models.CharField(max_length=2,choices=MODEL_SELECT,default=Model_0)
     status = models.CharField(max_length=2,choices=PROCESSING_STATUS,default=WAITING)
 
     product = models.CharField(max_length=2,choices=PRODUCT,default=LS8_OLI_LARSRC)
@@ -77,11 +75,3 @@ class SImage(models.Model):
 
     date_min = models.DateField('Date Min',help_text='Date format AAAA-MM-DD. Example: 2015-01-01')
     date_max = models.DateField('Date Max',help_text='Date format AAAA-MM-DD. Example: 2016-01-01')
-
-    def processed_path(self):
-        # return self.upload.name[:-4] + '_processed.png'
-        return None
-
-    def processed_url(self):
-        # return os.path.join(settings.MEDIA_URL,self.processed_path())
-        return None

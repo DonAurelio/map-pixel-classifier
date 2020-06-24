@@ -10,9 +10,7 @@ from django.conf import settings
 
 from django.views.generic.base import TemplateView
 
-from image.tasks import start_image_processing_nn_1
-from image.tasks import start_image_processing_nb_1
-from image.tasks import start_image_processing_nb_2
+from image.tasks import start_image_processing
 
 import os
 
@@ -40,33 +38,38 @@ class UploadImage(CreateView):
 
     def get_success_url(self):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
+
+        datacube_data = {
+            'product': self.object.product,
+            'platform': self.object.platform,
+            'latitude': (self.object.lat_min,self.object.lat_max),
+            'longitude': (self.object.lat_min,self.object.lat_max),
+            'time': (self.object.date_min,self.object.date_max)
+        }
         
         image_data = {
             'id': self.object.id,
-            'file_url': os.path.join(settings.MEDIA_ROOT,self.object.upload.name),
-            'classified_path': os.path.join(settings.MEDIA_ROOT,self.object.processed_path()) 
+            'original_path': os.path.join(settings.MEDIA_ROOT, str(self.object.id) + '.png' ),
+            'classified_path': os.path.join(settings.MEDIA_ROOT, str(self.object.id) + '_labeled.png') 
         }
 
         db_data = {
             'database_name': settings.DATABASES['default']['NAME']
         }
 
-        if self.object.model == SImage.NB_1:
+        # "Neural Networks"
+        if self.object.model == SImage.Model_0:
             model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'model_nb_multi_nubes_1.joblib')
+                'path': os.path.join(settings.MEDIA_ROOT,'SVM.joblib')
             }
-            start_image_processing_nb_1.delay(image_data,model_data,db_data)
-        elif self.object.model == SImage.NB_2:
-            model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'model_nb_gausiano_nubes_2.joblib')
-            }
-            start_image_processing_nb_2.delay(image_data,model_data,db_data)
+        # "Random Forest"
         else:
             model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'model_nn_1.h5')
+                'path': os.path.join(settings.MEDIA_ROOT,'RF.joblib')
             }
-            start_image_processing_nn_1.delay(image_data,model_data,db_data)
-
+        
+        # Start image processing
+        start_image_processing.delay(datacube_data,image_data,model_data,db_data)
 
         return reverse('image:list')
 
