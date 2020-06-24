@@ -40,10 +40,10 @@ class UploadImage(CreateView):
         # return reverse('image:index', kwargs={'pk': self.object.pk})
 
         datacube_data = {
-            'product': self.object.product,
-            'platform': self.object.platform,
+            'product': self.object.get_product_display(),
+            'platform': self.object.get_platform_display(),
             'latitude': (self.object.lat_min,self.object.lat_max),
-            'longitude': (self.object.lat_min,self.object.lat_max),
+            'longitude': (self.object.lon_min,self.object.lon_max),
             'time': (self.object.date_min,self.object.date_max)
         }
         

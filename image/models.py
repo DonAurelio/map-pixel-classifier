@@ -73,5 +73,5 @@ class SImage(models.Model):
         help_text='Valid values -75.80698879999998,-74.491394. Example: -74.8039',
         max_length=200)
 
-    date_min = models.DateField('Date Min',help_text='Date format AAAA-MM-DD. Example: 2015-01-01')
-    date_max = models.DateField('Date Max',help_text='Date format AAAA-MM-DD. Example: 2016-01-01')
+    date_min = models.CharField('Date Min',max_length=20,help_text='Date format AAAA-MM-DD. Example: 2015-01-01')
+    date_max = models.CharField('Date Max',max_length=20,help_text='Date format AAAA-MM-DD. Example: 2016-01-01')

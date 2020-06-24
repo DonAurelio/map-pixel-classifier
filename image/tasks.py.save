@@ -11,21 +11,17 @@ import matplotlib.pyplot as plt
 import joblib
 import time
 
-# Enable importing of utils.
-import sys
-sys.path.append('.')
-print('PATH_SYS',sys.path)
 # Load Data Cube Configuration
 import datacube
-import image.utils.data_cube_utilities.data_access_api as dc_api  
+import utils.data_cube_utilities.data_access_api as dc_api  
 api = dc_api.DataAccessApi()
 dc = api.dc
 
 # Datacube analysis
-from image.utils.data_cube_utilities.clean_mask import landsat_qa_clean_mask
-from image.utils.data_cube_utilities.dc_mosaic import create_mosaic
-from image.utils.data_cube_utilities.dc_mosaic import create_median_mosaic
-from image.utils.data_cube_utilities.dc_rgb import rgb
+from utils.data_cube_utilities.clean_mask import landsat_qa_clean_mask
+from utils.data_cube_utilities.dc_mosaic import create_mosaic
+from utils.data_cube_utilities.dc_mosaic import create_median_mosaic
+from utils.data_cube_utilities.dc_rgb import rgb
 
 
 
@@ -50,7 +46,7 @@ def update_sqlite_query(query_str,db_data):
 
     return row_count
 
-def datacube_image_classifcation(datacube_data,model_data):
+def load_datacube_data(datacube_data):
 
     # Loading datacube data
     product = datacube_data.get('product')
@@ -98,20 +94,9 @@ def datacube_image_classifcation(datacube_data,model_data):
     c = c.dropna()
     c[np.isfinite(c) == True] = 9999
 
-    # Load model and predict
-    # loading model data
-    model_path = model_data.get('path')
-    model = joblib.load(model_path)
 
-    prediccion = model.predict(c)
-    print(prediccion)
 
-    # Image data
-    image_original_path = image_data.get('original_path')
-    image_classified_path = image_data.get('classified_path')
 
-    #rgb(median_composite, bands=['swir2', 'nir', 'green'], min_possible=0, max_possible=4000, width=10)
-    #plt.show()
 
 @task(name="start_image_processing")
 def start_image_processing(datacube_data,image_data,model_data,db_data):
@@ -138,10 +123,20 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
 
     query_str = query_format % fields
     update_sqlite_query(query_str,db_data)
+    
+    # Loading datacube data
+    product = datacube_data.get('product')
+    platform = datacube_data.get('platform')
+    latitude = datacube_data.get('latitude')
+    longitude = datacube_data.get('longitude')
+    time = datacube_data.get('time')
 
-    logger.info("datacube load and classification ... ")
+    # loading model data
+    model_path = model_data.get('path')
 
-    datacube_image_classifcation(datacube_data,model_data)
+    # Image data
+    image_original_path = image_data.get('original_path')
+    image_classified_path = image_data.get('classified_path')
 
     fields = {
         'status': PROCESSED,
