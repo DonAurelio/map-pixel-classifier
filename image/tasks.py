@@ -50,7 +50,7 @@ def update_sqlite_query(query_str,db_data):
 
     return row_count
 
-def datacube_image_classifcation(datacube_data,model_data):
+def datacube_image_classifcation(datacube_data,model_data,image_data):
 
     # Loading datacube data
     product = datacube_data.get('product')
@@ -60,7 +60,7 @@ def datacube_image_classifcation(datacube_data,model_data):
     time = datacube_data.get('time')
 
 
-    dataset = dc.load(
+    landsat_dataset = dc.load(
         latitude=latitude,
         longitude=longitude,
         platform=platform,
@@ -141,7 +141,7 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
 
     logger.info("datacube load and classification ... ")
 
-    datacube_image_classifcation(datacube_data,model_data)
+    datacube_image_classifcation(datacube_data,model_data,image_data)
 
     fields = {
         'status': PROCESSED,

@@ -38,7 +38,7 @@ class SImage(models.Model):
     LS8_OLI_LARSRC = '0'
 
     PRODUCT = (
-        (LS8_OLI_LARSRC,'LS8_OLI_LARSRC'),
+        (LS8_OLI_LARSRC,'LS8_OLI_LASRC'),
     )
 
     LANDSAT_8 = '0'
