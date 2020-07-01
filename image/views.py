@@ -57,15 +57,15 @@ class UploadImage(CreateView):
             'database_name': settings.DATABASES['default']['NAME']
         }
 
-        # "Neural Networks"
+        # "Random Forest"
         if self.object.model == SImage.Model_0:
             model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'SVM.joblib')
+                'path': os.path.join(settings.MEDIA_ROOT,'RF.joblib')
             }
-        # "Random Forest"
+        # "Support Vector Machines"
         else:
             model_data = {
-                'path': os.path.join(settings.MEDIA_ROOT,'RF.joblib')
+                'path': os.path.join(settings.MEDIA_ROOT,'SVM.joblib')
             }
         
         # Start image processing
