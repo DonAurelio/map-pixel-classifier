@@ -130,6 +130,9 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
     """sends an email when feedback form is filled successfully"""
 
     logger.info("Start Image Processing")
+    
+    # Loading image data
+    image_id = image_data['id']
 
     # Change status of image to processing
     query_format = (
