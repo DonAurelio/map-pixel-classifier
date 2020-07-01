@@ -11,8 +11,8 @@ class SImage(models.Model):
     Model_1 = '1'
 
     MODEL_SELECT = (
-        (Model_0, "Neural Networks"),
-        (Model_1, "Random Forest"),
+        (Model_0, "Random Forest"),
+        (Model_1, "Support Vector Machines"),
     )
 
     WAITING = '0'
