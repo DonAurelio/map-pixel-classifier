@@ -4,6 +4,7 @@ from celery.utils.log import get_task_logger
 import sqlite3
 import numpy as np
 import xarray as xr
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 # from keras.models import load_model
@@ -86,9 +87,9 @@ def datacube_image_classifcation(datacube_data,model_data,image_data):
     # Add indexes into the dataset
     least_recent_composite['rvi'] = (least_recent_composite.red)/(least_recent_composite.nir)
     least_recent_composite['ndvi'] = (least_recent_composite.nir-least_recent_composite.red )/(least_recent_composite.nir+least_recent_composite.red)
-    #least_recent_composite['evi'] = 2*((least_recent_composite.nir-least_recent_composite.red )/(least_recent_composite.nir+(6*least_recent_composite.red)-(7.5*least_recent_composite.blue)+1))
-    #least_recent_composite['evi2'] =  2*((least_recent_composite.nir-least_recent_composite.red )/(least_recent_composite.nir+(2.4*least_recent_composite.red)+1))
-    #least_recent_composite['lswi'] = (least_recent_composite.nir-least_recent_composite.swir1 )/(least_recent_composite.nir + least_recent_composite.swir1 )
+    least_recent_composite['evi'] = 2*((least_recent_composite.nir-least_recent_composite.red )/(least_recent_composite.nir+(6*least_recent_composite.red)-(7.5*least_recent_composite.blue)+1))
+    least_recent_composite['evi2'] =  2*((least_recent_composite.nir-least_recent_composite.red )/(least_recent_composite.nir+(2.4*least_recent_composite.red)+1))
+    least_recent_composite['lswi'] = (least_recent_composite.nir-least_recent_composite.swir1 )/(least_recent_composite.nir + least_recent_composite.swir1 )
 
     # Convert Dataset to Pandas Dataframe for prediction
     df = least_recent_composite.to_dataframe()
@@ -96,7 +97,7 @@ def datacube_image_classifcation(datacube_data,model_data,image_data):
     # Remove NaN and Inf
     c = df[['coastal_aerosol','red', 'green', 'blue', 'nir', 'swir1', 'swir2', 'pixel_qa','aerosol_qa','radsat_qa', 'rvi', 'ndvi']]
     c = c.dropna()
-    c[np.isfinite(c) == True] = 9999
+    c=c.replace([np.inf, -np.inf], -9999)
 
     # Load model and predict
     # loading model data
@@ -106,12 +107,23 @@ def datacube_image_classifcation(datacube_data,model_data,image_data):
     prediccion = model.predict(c)
     print(prediccion)
 
+    c['class'] = prediccion
+
+    Final=c.to_xarray()
+    
+    cmap = mpl.colors.ListedColormap([
+        'red','lime', 'yellowgreen', 'yellow', 'green',
+        'orange', 'blue','white','silver','brown','peru'
+    ])
+    
     # Image data
     image_original_path = image_data.get('original_path')
     image_classified_path = image_data.get('classified_path')
-
-    #rgb(median_composite, bands=['swir2', 'nir', 'green'], min_possible=0, max_possible=4000, width=10)
-    #plt.show()
+    
+    fig=Final["class"].transpose('latitude', 'longitude').plot(cmap=cmap, figsize = (16, 8))
+    plt.savefig(image_classified_path, bbox_inches='tight')
+    
+    return Final
 
 @task(name="start_image_processing")
 def start_image_processing(datacube_data,image_data,model_data,db_data):
@@ -141,11 +153,37 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
 
     logger.info("datacube load and classification ... ")
 
-    datacube_image_classifcation(datacube_data,model_data,image_data)
+    Final = datacube_image_classifcation(datacube_data,model_data,image_data)
+
+    data_array = Final['class']
+
+    west = str(min(data_array.longitude.values))
+    east = str(max(data_array.longitude.values))
+    south = str(min(data_array.latitude.values)) 
+    north = str(max(data_array.latitude.values))
+
+    query_format = (
+        'UPDATE image_simage SET '
+        'status=\'%(status)s\', '
+        'west=\'%(west)s\', '
+        'east=\'%(east)s\', '
+        'south=\'%(south)s\', '
+        'north=\'%(north)s\' '
+        'WHERE id=\'%(id)s\';'
+    )
+
+    WAITING = '0'
+    PROCESSING = '1'
+    PROCESSED =  '2'
+    ERROR = '3'
 
     fields = {
+        'west': west,
+        'east': east,
+        'south': south,
+        'north': north,
         'status': PROCESSED,
-        'id': image_data.get('id')
+        'id': image_id
     }
 
     query_str = query_format % fields
