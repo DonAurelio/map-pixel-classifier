@@ -77,7 +77,7 @@ class SImage(models.Model):
     date_max = models.CharField('Date Max',max_length=20,help_text='Date format AAAA-MM-DD. Example: 2016-01-01')
     
     def processed_path(self):
-        return os.path.join(settings.MEDIA_ROOT, str(self.id) + '_labeled.png')
+        return os.path.join(settings.MEDIA_URL, str(self.id) + '_labeled.png')
     
     def processed_url(self):
-        return os.path.join(settings.MEDIA_ROOT, str(self.id) + '_labeled.png') 
+        return os.path.join(settings.MEDIA_URL, str(self.id) + '_labeled.png') 
