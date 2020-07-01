@@ -75,3 +75,6 @@ class SImage(models.Model):
 
     date_min = models.CharField('Date Min',max_length=20,help_text='Date format AAAA-MM-DD. Example: 2015-01-01')
     date_max = models.CharField('Date Max',max_length=20,help_text='Date format AAAA-MM-DD. Example: 2016-01-01')
+    
+    def processed_url(self):
+        return os.path.join(settings.MEDIA_ROOT, str(self.object.id) + '_labeled.png') 
