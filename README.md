@@ -32,13 +32,13 @@ pip3 install -r requirements.txt
 Open a new términal and use the following command to enable a celery worker
 
 ```sh 
-celery -A picha worker -l info
+celery -A immap worker -l info
 ```
 
 Open another terminal and use the following command to enable a the celery scheduler
 
 ```sh 
-celery -A picha beat -l info
+celery -A immap beat -l info
 ```
 
 One more términal to run the django development server
