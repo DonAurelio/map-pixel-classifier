@@ -65,6 +65,50 @@ body {
 </div>
 
 <img src="{{ object.processed_url }}" alt="Italian Trulli" style="max-width: 70%; align-items: center; margin-left: 15%; margin-right: 15%; margin-bottom: 5%; margin-top: 5%">
-   
+ 
+  
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-u01j{background-color:#34cdf9;border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-96sx{background-color:#00d2cb;border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-dlbm{background-color:#34cdf9;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+@media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;margin: auto 0px;}}</style>
+<div class="tg-wrap"><table class="tg">
+<thead>
+  <tr>
+    <th class="tg-96sx">{{ object.get_model_display }}</th>
+    <th class="tg-u01j">Mínimo</th>
+    <th class="tg-u01j">Máximo</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-u01j">Latitud</td>
+    <td class="tg-0pky">{{ object.lat_min }}</td>
+    <td class="tg-0pky">{{ object.lat_max }}</td>
+  </tr>
+  <tr>
+    <td class="tg-u01j">Longitud</td>
+    <td class="tg-0pky">{{ object.lon_min }}</td>
+    <td class="tg-0pky">{{ object.lon_max }}</td>
+  </tr>
+  <tr>
+    <td class="tg-dlbm">Fecha</td>
+    <td class="tg-0lax">{{ object.date_min }}</td>
+    <td class="tg-0lax">{{ object.date_max }}</td>
+  </tr>
+</tbody>
+</table></div>
+  
+
+
+
+  
 </body>
 </html> 
