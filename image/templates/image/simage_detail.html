@@ -64,30 +64,7 @@ body {
   <a href="{% url 'image:list' %}">Images</a>
 </div>
 
-<div id="map" class="main"></div>
-
-<script>
-  var historicalOverlay;
-
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 5,
-      center: {lat: 4.1156735, lng: -72.9301367}
-    });
-
-    var imageBounds = {
-      north: {{ object.north }},
-      south: {{ object.south }},
-      east: {{ object.east }},
-      west: {{ object.west }}
-    };
-
-    historicalOverlay = new google.maps.GroundOverlay("{{ object.processed_url|safe }}",imageBounds);
-    historicalOverlay.setMap(map);
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwEW9_KvS6Kc9mphuIsGcnUb_Kx57UKtU&callback=initMap"
-async defer></script>
+<img src="{{ object.processed_url }}" alt="Italian Trulli" style="max-width: 70%; align-items: center; margin-left: 15%; margin-right: 15%; margin-bottom: 5%; margin-top: 5%">
    
 </body>
 </html> 

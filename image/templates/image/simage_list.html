@@ -97,7 +97,7 @@ body {
             <tbody>
               {% for object in object_list %}
               <tr>
-                <th scope="row">{{ object.id }}</th>
+                <th scope="row"><a class="btn btn-primary" href="{% url 'image:detail' object.pk %}" role="button">{{ object.id }}</a></th>
                 <td>{{ object.upload.name }}</td>
                 <td>{{ object.processed_path }}</td>
                 <td>{{ object.get_model_display }}</td>
