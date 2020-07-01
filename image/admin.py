@@ -1,3 +1,4 @@
 from django.contrib import admin
+from image.models import SImage
 
-# Register your models here.
+admin.site.register(SImage)
