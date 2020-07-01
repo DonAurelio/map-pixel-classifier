@@ -160,18 +160,18 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
 
     data_array = Final['class']
 
-    west = str(min(data_array.longitude.values))
-    east = str(max(data_array.longitude.values))
-    south = str(min(data_array.latitude.values)) 
-    north = str(max(data_array.latitude.values))
+    lon_min = str(min(data_array.longitude.values))
+    lon_max = str(max(data_array.longitude.values))
+    lat_min = str(min(data_array.latitude.values)) 
+    lat_max = str(max(data_array.latitude.values))
 
     query_format = (
         'UPDATE image_simage SET '
         'status=\'%(status)s\', '
-        'west=\'%(west)s\', '
-        'east=\'%(east)s\', '
-        'south=\'%(south)s\', '
-        'north=\'%(north)s\' '
+        'lon_min=\'%(lon_min)s\', '
+        'lon_max=\'%(lon_max)s\', '
+        'lat_min=\'%(lat_min)s\', '
+        'lat_max=\'%(lat_max)s\' '
         'WHERE id=\'%(id)s\';'
     )
 
@@ -181,10 +181,10 @@ def start_image_processing(datacube_data,image_data,model_data,db_data):
     ERROR = '3'
 
     fields = {
-        'west': west,
-        'east': east,
-        'south': south,
-        'north': north,
+        'lon_min': lon_min,
+        'lon_max': lon_max,
+        'lat_min': lat_min,
+        'lat_max': lat_max,
         'status': PROCESSED,
         'id': image_id
     }
