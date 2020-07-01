@@ -95,7 +95,7 @@ def datacube_image_classifcation(datacube_data,model_data,image_data):
     df = least_recent_composite.to_dataframe()
 
     # Remove NaN and Inf
-    c = df[['coastal_aerosol','red', 'green', 'blue', 'nir', 'swir1', 'swir2', 'pixel_qa','aerosol_qa','radsat_qa', 'rvi', 'ndvi']]
+    c = df[['coastal_aerosol','red', 'green', 'blue', 'nir', 'swir1', 'swir2', 'pixel_qa','aerosol_qa','radsat_qa', 'rvi', 'ndvi','evi','evi2','lswi']]
     c = c.dropna()
     c=c.replace([np.inf, -np.inf], -9999)
 
