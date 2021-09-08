@@ -64,7 +64,7 @@ pandas==0.23.4
 pathos==0.2.2.1
 pbr==4.2.0
 pendulum==2.0.3
-Pillow==6.2.1
+Pillow==8.3.2
 pluggy==0.7.1
 pox==0.2.4
 ppft==1.6.4.8
