@@ -24,7 +24,7 @@ cloudpickle==0.5.5
 compliance-checker==4.0.1
 coverage==4.5.1
 cycler==0.10.0
-dask==0.18.2
+dask==2021.10.0
 dill==0.2.8.2
 Django==2.1.7
 django-bootstrap3==11.1.0
