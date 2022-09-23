@@ -68,7 +68,7 @@ Pillow==6.2.1
 pluggy==0.7.1
 pox==0.2.4
 ppft==1.6.4.8
-protobuf==3.11.0
+protobuf==3.18.3
 psycopg2==2.7.5
 py==1.6.0
 pycodestyle==2.4.0
